@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nopareti <nopareti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_HPP
-#define FORM_HPP
+#ifndef AFORM_HPP
+#define AFORM_HPP
 
 #include <string>
 
 class Bureaucrat;
 
-class Form
+class AForm
 {
 	private:
 		const std::string name;
@@ -25,15 +25,18 @@ class Form
 		const int gradeToSign;
 		const int gradeToExecute;
 	public:
-		Form(const std::string &name, int gradeToSign, int gradeToExecute);
-		Form(const Form &copy);
-		Form &operator=(const Form &assign);
-		~Form();
+		AForm(const std::string &name, int gradeToSign, int gradeToExecute);
+		AForm(const AForm &copy);
+		AForm &operator=(const AForm &assign);
+		virtual ~AForm();
 		std::string getName() const;
 		bool isSigned() const;
+		bool getIsSigned() const;
+		void setIsSigned(const bool value);
 		int getGradeToSign() const;
 		int getGradeToExecute() const;
 		void beSigned(const Bureaucrat &bureaucrat);
+		virtual void execute(Bureaucrat & executor) const = 0;
 	
 		class GradeTooHighException : public std::exception {
 		public:
@@ -44,9 +47,9 @@ class Form
 		public:
 			const char* what() const throw();
 		};
-}
+};
 
-std::ostream &operator<<(std::ostream &out, const Form &form);
+std::ostream &operator<<(std::ostream &out, const AForm &aform);
 
 #endif
 	
